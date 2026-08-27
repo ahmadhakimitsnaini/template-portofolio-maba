@@ -1,15 +1,15 @@
 /* Import Font dari Google Fonts untuk tampilan modern */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* CSS Variables: Untuk memudahkan pengubahan tema warna */
+/* CSS Variables: Palet High-Contrast Monochrome (Elegan & Minimalis) */
 :root {
-    --primary-color: #3b82f6; /* Warna biru utama */
-    --primary-hover: #2563eb;
-    --bg-color: #f8fafc;      /* Warna background halaman */
-    --text-main: #1e293b;     /* Warna teks utama */
-    --text-muted: #64748b;    /* Warna teks sekunder (abu-abu) */
-    --card-bg: #ffffff;       /* Warna latar card dan navbar */
-    --border-color: #e2e8f0;  /* Warna garis batas */
+    --primary-color: #1d1d1f; /* Hitam elegan untuk aksen utama */
+    --primary-hover: #434344; /* Abu-abu gelap untuk efek hover */
+    --bg-color: #fcfaf8;      /* Warm Off-White / Oat untuk background halaman */
+    --text-main: #1d1d1f;     /* Warna teks utama (hitam) */
+    --text-muted: #86868b;    /* Warna teks sekunder (abu-abu) */
+    --card-bg: #ffffff;       /* Putih bersih untuk latar card dan navbar */
+    --border-color: #e5e3df;  /* Warna garis batas yang disesuaikan menjadi lebih hangat */
 }
 
 /* Reset CSS dasar (Phase 3.1) */
@@ -21,12 +21,38 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg-color);
+    /* Animated Gradient Background */
+    background: linear-gradient(-45deg, #ffffff, #f5f5f7, #e8f0fe, #fcfaf8);
+    background-size: 400% 400%;
+    animation: gradientBG 20s ease infinite;
     color: var(--text-main);
     line-height: 1.6;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    position: relative; /* Agar ::before dan blob relatif (meski fixed) terkendali */
+}
+
+/* Tech Grid Pattern */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    pointer-events: none;
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* Typography & Links */
@@ -70,7 +96,8 @@ main {
     position: sticky; /* Menempel di atas saat discroll */
     top: 1.5rem;
     z-index: 100;
-    max-width: 900px;
+    max-width: 1100px;
+    gap: 2rem;
     margin: 1.5rem auto;
     border-radius: 9999px;
 }
@@ -226,6 +253,21 @@ main {
     text-align: center;
     width: 100%;
 }
+
+/* Efek Parallax Khusus Bagian Tim */
+.team-section {
+    padding: 4rem 2rem;
+    border-radius: 24px;
+    background-color: rgba(255, 255, 255, 0.4);
+    background-image: radial-gradient(rgba(0, 0, 0, 0.06) 2px, transparent 2px);
+    background-size: 40px 40px;
+    background-attachment: fixed;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.01);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    margin-bottom: 4rem;
+}
 .team-section p, .contact-section p {
     color: var(--text-muted);
     margin-bottom: 3rem;
@@ -347,4 +389,63 @@ main {
         width: 100%; /* Memenuhi layar HP */
         max-width: 350px;
     }
+}
+
+/* ========================================= */
+/* DECORATIVE: FLOATING BLOBS                */
+/* ========================================= */
+.blobs-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.blob {
+    position: absolute;
+    filter: blur(80px);
+    opacity: 0.5;
+    animation: float 20s ease-in-out infinite alternate;
+}
+
+.blob-1 {
+    width: 400px;
+    height: 400px;
+    background: #e0e7ff; /* Biru pastel */
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    top: -10%;
+    left: -10%;
+    animation-delay: 0s;
+}
+
+.blob-2 {
+    width: 300px;
+    height: 300px;
+    background: #f1f5f9; /* Slate sangat terang */
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    top: 40%;
+    right: -5%;
+    animation-delay: -5s;
+    animation-duration: 25s;
+}
+
+.blob-3 {
+    width: 350px;
+    height: 350px;
+    background: #ffffff;
+    border-radius: 50% 50% 30% 70% / 50% 40% 60% 50%;
+    bottom: -15%;
+    left: 20%;
+    animation-delay: -10s;
+    animation-duration: 18s;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    50% { transform: translate(100px, 50px) scale(1.1) rotate(45deg); }
+    100% { transform: translate(-50px, 150px) scale(0.9) rotate(90deg); }
 }
